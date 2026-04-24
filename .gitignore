@@ -5,8 +5,9 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
-# IntelliJ IDEA
-.idea/
+# IntelliJ IDEA (se versiona gradle.xml: delegar build/run a Gradle evita LinkageError por classpath duplicado)
+.idea/*
+!.idea/gradle.xml
 *.iws
 *.iml
 *.ipr
