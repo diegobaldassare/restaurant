@@ -5,8 +5,11 @@ import edu.austral.prog2.model.entities.Order;
 import edu.austral.prog2.model.entities.Plate;
 import edu.austral.prog2.model.exceptions.PlateNotFoundException;
 import edu.austral.prog2.model.exceptions.ServedOrderException;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * View class that handles all user interface interactions.
@@ -14,11 +17,11 @@ import java.util.Scanner;
  */
 public class RestaurantView {
     private final RestaurantController controller;
-    private final Scanner scanner;
+    private final BufferedReader in;
 
     public RestaurantView(RestaurantController controller) {
         this.controller = controller;
-        this.scanner = new Scanner(System.in);
+        this.in = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
     }
 
     public void start() {
@@ -69,11 +72,12 @@ public class RestaurantView {
                 if (continuar) {
                     System.out.println();
                     System.out.println("Presione Enter para continuar...");
-                    scanner.nextLine();
+                    if (leerLinea() == null) {
+                        continuar = false;
+                    }
                 }
             }
         }
-        scanner.close();
     }
 
     private void mostrarMenu() {
@@ -241,36 +245,72 @@ public class RestaurantView {
         }
     }
 
-    private int leerEntero(String mensaje) {
-        System.out.print(mensaje);
-        while (!scanner.hasNextInt()) {
-            System.out.print("Por favor, ingrese un número entero válido: ");
-            scanner.next();
+    private String leerLinea() {
+        try {
+            return in.readLine();
+        } catch (IOException e) {
+            return null;
         }
-        int valor = scanner.nextInt();
-        scanner.nextLine();
-        return valor;
+    }
+
+    private int leerEntero(String mensaje) {
+        while (true) {
+            System.out.print(mensaje);
+            String line = leerLinea();
+            if (line == null) {
+                System.out.println("\nEntrada cerrada. Saliendo.");
+                return 0;
+            }
+            line = line.trim();
+            if (line.isEmpty()) {
+                System.out.println("Ingrese un número (no deje la línea vacía).");
+                continue;
+            }
+            try {
+                return Integer.parseInt(line);
+            } catch (NumberFormatException e) {
+                System.out.println("Por favor, ingrese un número entero válido.");
+            }
+        }
     }
 
     private double leerDecimal(String mensaje) {
-        System.out.print(mensaje);
-        while (!scanner.hasNextDouble()) {
-            System.out.print("Por favor, ingrese un número decimal válido: ");
-            scanner.next();
+        while (true) {
+            System.out.print(mensaje);
+            String line = leerLinea();
+            if (line == null) {
+                System.out.println("\nEntrada cerrada.");
+                return 0.0;
+            }
+            line = line.trim();
+            if (line.isEmpty()) {
+                System.out.println("Ingrese un valor (no deje la línea vacía).");
+                continue;
+            }
+            try {
+                return Double.parseDouble(line.replace(',', '.'));
+            } catch (NumberFormatException e) {
+                System.out.println("Por favor, ingrese un número decimal válido.");
+            }
         }
-        double valor = scanner.nextDouble();
-        scanner.nextLine();
-        return valor;
     }
 
     private String leerTexto(String mensaje) {
         System.out.print(mensaje);
-        return scanner.nextLine().trim();
+        String line = leerLinea();
+        if (line == null) {
+            return "";
+        }
+        return line.trim();
     }
 
     private boolean leerSiNo(String mensaje) {
         System.out.print(mensaje);
-        String respuesta = scanner.nextLine().trim().toLowerCase();
+        String line = leerLinea();
+        if (line == null) {
+            return false;
+        }
+        String respuesta = line.trim().toLowerCase();
         return respuesta.equals("s") || respuesta.equals("si");
     }
 }

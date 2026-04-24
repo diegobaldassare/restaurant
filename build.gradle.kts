@@ -1,3 +1,5 @@
+import org.gradle.api.tasks.JavaExec
+
 plugins {
     id("java")
     id("application")
@@ -21,11 +23,15 @@ tasks.test {
 }
 
 application {
-    mainClass.set("edu.austral.parcial.App")
+    mainClass.set("edu.austral.prog2.App")
+}
+
+tasks.named<JavaExec>("run") {
+    standardInput = System.`in`
 }
 
 tasks.jar {
     manifest {
-        attributes["Main-Class"] = "edu.austral.parcial.App"
+        attributes["Main-Class"] = "edu.austral.prog2.App"
     }
 }

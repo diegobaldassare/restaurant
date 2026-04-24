@@ -43,6 +43,7 @@ class TestRestaurant {
 
         assertEquals(expectedCost, calculatedCost, 0.001, "El costo total del pedido (39.00) es incorrecto.");
         assertEquals(expectedPlates, calculatedPlates, "El conteo recursivo de platos debe devolver 5.");
+        assertFalse(r.getPendingOrders().isEmpty(), "El pedido debe estar en la lista de pedidos pendientes.");
     }
 
     @Test

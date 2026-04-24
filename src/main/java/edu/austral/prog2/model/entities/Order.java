@@ -58,6 +58,12 @@ public class Order implements Identifiable {
         }
         return 1 + countPlatesRecursive(index + 1);
     }
+
+    public int recursiveGetNumberOfPlates(List<Plate> plates) {
+        if (plates.isEmpty()) return 0;
+        return 1 + recursiveGetNumberOfPlates(plates.subList(1, plates.size()));
+    }
+
     /**
      * Avanza al siguiente estado del pedido.
      * De esta manera garantizamos el encapsulamiento

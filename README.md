@@ -14,3 +14,27 @@ Una nueva cadena de restaurantes, “GourmetFlow”, está modernizando su opera
 8. Un método en el sistema debe calcular el número total de platos que contiene un pedido. Este método debe ser implementado de forma recursiva para demostrar tu comprensión del concepto.
 9. El sistema debe permitir al personal consultar todos los pedidos que se encuentran en estado ‘Pendiente’.
 10. Se deben implementar validaciones necesarias (por ejemplo, solo agregar plato del menú; no modificar pedidos servidos).
+
+## Ejecución de la aplicación
+
+La interfaz es una aplicación de consola (`RestaurantView`), iniciada desde la clase `edu.austral.prog2.App`.
+
+### Requisitos previos
+
+- [JDK](https://openjdk.org/) instalado (por ejemplo 17 o superior).
+- Estar en la raíz del proyecto (donde está `build.gradle.kts` y el script `gradlew`).
+
+### Pasos
+
+1. **Abrir una terminal** en la carpeta del proyecto.
+2. **Ejecutar la aplicación** con Gradle Wrapper:
+   - macOS / Linux: `./gradlew run`
+   - Windows: `gradlew.bat run`
+3. **Usar el menú** que aparece en consola: ingresar el número de la opción y los datos que solicite el programa.
+
+El primer arranque puede tardar un poco mientras Gradle descarga dependencias.
+
+### Comandos útiles
+
+- Compilar y ejecutar tests: `./gradlew test`
+- Solo compilar: `./gradlew classes`
